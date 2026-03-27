@@ -474,6 +474,18 @@ a:hover { color: var(--color-accent); }
 }
 
 /* ═══════════════════════════════════════════
+   Empty State
+   ═══════════════════════════════════════════ */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.empty-state.hidden { display: none; }
+
+/* ═══════════════════════════════════════════
    Animations
    ═══════════════════════════════════════════ */
 @keyframes fadeInUp {
@@ -546,20 +558,20 @@ a:hover { color: var(--color-accent); }
   <div class="container">
     <div class="filter-row">
       <span class="filter-label">Stufe</span>
-      <span class="chip active" data-level="P" role="button" tabindex="0">Primarstufe</span>
-      <span class="chip active" data-level="SI" role="button" tabindex="0">Sek I</span>
-      <span class="chip active" data-level="SII" role="button" tabindex="0">Sek II</span>
+      <span class="chip" data-level="P" role="button" tabindex="0">Primarstufe</span>
+      <span class="chip" data-level="SI" role="button" tabindex="0">Sek I</span>
+      <span class="chip" data-level="SII" role="button" tabindex="0">Sek II</span>
     </div>
     <div class="filter-row">
       <span class="filter-label">Ebene</span>
-      <span class="chip active" data-type="prompt" role="button" tabindex="0">Prompt</span>
-      <span class="chip active" data-type="assistent" role="button" tabindex="0">Assistent</span>
-      <span class="chip active" data-type="lernszenario" role="button" tabindex="0">Lernszenario</span>
-      <span class="chip active" data-type="dialogpartner" role="button" tabindex="0">Dialogpartner</span>
-      <span class="chip active" data-type="bildgenerierung" role="button" tabindex="0">Bildgenerierung</span>
+      <span class="chip" data-type="prompt" role="button" tabindex="0">Prompt</span>
+      <span class="chip" data-type="assistent" role="button" tabindex="0">Assistent</span>
+      <span class="chip" data-type="lernszenario" role="button" tabindex="0">Lernszenario</span>
+      <span class="chip" data-type="dialogpartner" role="button" tabindex="0">Dialogpartner</span>
+      <span class="chip" data-type="bildgenerierung" role="button" tabindex="0">Bildgenerierung</span>
     </div>
     <div class="filter-meta">
-      <span><span class="count" id="visibleCount">42</span> von 42 Beispielen</span>
+      <span><span class="count" id="visibleCount">0</span> von 42 Beispielen</span>
       <button class="reset-link" id="resetBtn">Alle anzeigen</button>
     </div>
   </div>
@@ -569,6 +581,9 @@ a:hover { color: var(--color-accent); }
 <main class="catalog">
   <div class="container" id="catalogContainer">
     <!-- Cards rendered by JS -->
+  </div>
+  <div class="container">
+    <p class="empty-state" id="emptyState">Wählen Sie eine oder mehrere Schulstufen und telli-Ebenen aus, um passende Beispiele zu sehen.</p>
   </div>
 </main>
 
@@ -717,9 +732,15 @@ function getActiveValues(chips, attr) {
 function applyFilters() {
   const activeLevels = getActiveValues(levelChips, "level");
   const activeTypes = getActiveValues(typeChips, "type");
+  const emptyState = document.getElementById("emptyState");
+  const noFilters = activeLevels.length === 0 && activeTypes.length === 0;
   let visible = 0;
 
   document.querySelectorAll(".card").forEach(card => {
+    if (noFilters) {
+      card.classList.add("hidden");
+      return;
+    }
     const cardLevels = card.dataset.levels.split(",");
     const cardType = card.dataset.type;
     const matchLevel = activeLevels.length === 0 || cardLevels.some(l => activeLevels.includes(l));
@@ -730,6 +751,7 @@ function applyFilters() {
   });
 
   countEl.textContent = visible;
+  emptyState.classList.toggle("hidden", visible > 0);
 }
 
 function chipToggle(e) {
@@ -750,6 +772,9 @@ resetBtn.addEventListener("click", () => {
   [...levelChips, ...typeChips].forEach(c => c.classList.add("active"));
   applyFilters();
 });
+
+// Initial state: no filters active, all cards hidden, empty state visible
+applyFilters();
 </script>
 </body>
 </html>
