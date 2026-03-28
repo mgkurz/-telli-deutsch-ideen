@@ -656,11 +656,39 @@ a:hover { color: var(--color-accent); }
 <!-- ════════ FOOTER ════════ -->
 <footer class="site-footer">
   <div class="container">
-    <div>CC BY-SA 4.0 · Hessische Lehrkräfteakademie · Martin Kurz · <a href="mailto:martin.kurz@bildung.hessen.de">martin.kurz@bildung.hessen.de</a></div>
-    <div style="margin-top:0.4rem"><a href="#datenschutz">Datenschutzerklärung</a></div>
+    CC BY-SA 4.0 · Hessische Lehrkräfteakademie · Martin Kurz · <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutzerklärung</a>
   </div>
 </footer>
 </div><!-- /main-content -->
+
+<!-- ════════ IMPRESSUM (hash-routed) ════════ -->
+<section class="page-datenschutz" id="pageImpressum">
+  <div class="container">
+    <a href="#" class="back-link">← Zurück zur Übersicht</a>
+    <h1>Impressum</h1>
+
+    <h2>Verantwortlich</h2>
+    <p>
+      Martin Kurz<br>
+      Hessische Lehrkräfteakademie, Dezernat II.3 Medien<br>
+      Lahnstraße 61, 35389 Gießen<br>
+      E-Mail: <a href="mailto:martin.kurz@bildung.hessen.de">martin.kurz@bildung.hessen.de</a>
+    </p>
+    <p>
+      Diese Website wurde im Rahmen einer dienstlichen Tätigkeit an der Hessischen Lehrkräfteakademie erstellt.
+    </p>
+
+    <h2>Lizenz</h2>
+    <p>
+      Die Inhalte dieser Website stehen unter der Lizenz <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen).
+    </p>
+
+    <h2>Quellcode</h2>
+    <p>
+      Der Quellcode dieser Website ist frei verfügbar: <a href="https://github.com/mgkurz/telli-deutsch-ideen" target="_blank" rel="noopener">github.com/mgkurz/telli-deutsch-ideen</a>
+    </p>
+  </div>
+</section>
 
 <!-- ════════ DATENSCHUTZ (hash-routed) ════════ -->
 <section class="page-datenschutz" id="pageDatenschutz">
@@ -877,18 +905,24 @@ resetBtn.addEventListener("click", () => {
 applyFilters();
 
 /* ═══════════════════════════════════════════
-   Hash routing (main ↔ datenschutz)
+   Hash routing (main ↔ impressum / datenschutz)
    ═══════════════════════════════════════════ */
 function handleRoute() {
   const mainEl = document.getElementById("mainContent");
   const dsEl = document.getElementById("pageDatenschutz");
-  if (window.location.hash === "#datenschutz") {
+  const impEl = document.getElementById("pageImpressum");
+  const hash = window.location.hash;
+  mainEl.classList.remove("hidden-by-route");
+  dsEl.classList.remove("visible");
+  impEl.classList.remove("visible");
+  if (hash === "#datenschutz") {
     mainEl.classList.add("hidden-by-route");
     dsEl.classList.add("visible");
     window.scrollTo(0, 0);
-  } else {
-    mainEl.classList.remove("hidden-by-route");
-    dsEl.classList.remove("visible");
+  } else if (hash === "#impressum") {
+    mainEl.classList.add("hidden-by-route");
+    impEl.classList.add("visible");
+    window.scrollTo(0, 0);
   }
 }
 window.addEventListener("hashchange", handleRoute);
