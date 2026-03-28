@@ -37,6 +37,9 @@
   --badge-bildgenerierung: #5a7c9e;
   --badge-bildgenerierung-bg: #e8eff5;
 
+  --badge-inklusion: #8b5a2b;
+  --badge-inklusion-bg: #f5ead6;
+
   --max-width: 960px;
   --radius: 6px;
   --transition: 0.25s ease;
@@ -258,6 +261,8 @@ a:hover { color: var(--color-accent); }
 .chip[data-type="dialogpartner"].active { background: var(--badge-dialogpartner); color: #fff; }
 .chip[data-type="bildgenerierung"] { border-color: var(--badge-bildgenerierung); color: var(--badge-bildgenerierung); }
 .chip[data-type="bildgenerierung"].active { background: var(--badge-bildgenerierung); color: #fff; }
+.chip[data-theme="inklusion"] { border-color: var(--badge-inklusion); color: var(--badge-inklusion); }
+.chip[data-theme="inklusion"].active { background: var(--badge-inklusion); color: #fff; }
 
 .filter-meta {
   display: flex;
@@ -280,7 +285,13 @@ a:hover { color: var(--color-accent); }
   font-family: inherit;
 }
 .reset-link:hover { color: var(--color-accent-dark); }
-.filter-divider { color: var(--color-border); font-size: 0.85rem; }
+
+.filter-hint {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.6rem;
+  font-style: italic;
+}
 
 /* ═══════════════════════════════════════════
    Catalog Cards
@@ -363,6 +374,7 @@ a:hover { color: var(--color-accent); }
 .badge-lernszenario { background: var(--badge-lernszenario-bg); color: var(--badge-lernszenario); }
 .badge-dialogpartner { background: var(--badge-dialogpartner-bg); color: var(--badge-dialogpartner); }
 .badge-bildgenerierung { background: var(--badge-bildgenerierung-bg); color: var(--badge-bildgenerierung); }
+.badge-inklusion { background: var(--badge-inklusion-bg); color: var(--badge-inklusion); }
 
 .card-short {
   font-size: 0.83rem;
@@ -429,6 +441,15 @@ a:hover { color: var(--color-accent); }
   margin-bottom: 0.75rem;
   font-style: italic;
 }
+
+.block-diff {
+  background: var(--badge-inklusion-bg);
+  border-left: 3px solid var(--badge-inklusion);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.block-diff .block-label { color: var(--badge-inklusion); }
 
 /* ═══════════════════════════════════════════
    Sources
@@ -511,18 +532,6 @@ a:hover { color: var(--color-accent); }
 .main-content.hidden-by-route { display: none; }
 
 /* ═══════════════════════════════════════════
-   Empty State
-   ═══════════════════════════════════════════ */
-.empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  font-size: 1.05rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-.empty-state.hidden { display: none; }
-
-/* ═══════════════════════════════════════════
    Animations
    ═══════════════════════════════════════════ */
 @keyframes fadeInUp {
@@ -585,7 +594,7 @@ a:hover { color: var(--color-accent); }
       <div class="ebene-card fade-in" style="animation-delay:0.3s">
         <span class="emoji">♿</span>
         <h3>Inklusion / Differenzierung / DaZ</h3>
-        <p>Querschnittskategorie. KI ermöglicht gleiche Inhalte auf verschiedenen sprachlichen und didaktischen Niveaus.</p>
+        <p>Querschnittskategorie. KI ermöglicht gleiche Inhalte auf verschiedenen sprachlichen und didaktischen Niveaus. 12 Beispiele in dieser Sammlung tragen das Etikett „Inklusion / DaZ" und enthalten konkrete Differenzierungshinweise.</p>
       </div>
     </div>
   </div>
@@ -594,6 +603,7 @@ a:hover { color: var(--color-accent); }
 <!-- ════════ FILTER BAR ════════ -->
 <div class="filter-bar">
   <div class="container">
+    <div class="filter-hint">Filtern Sie nach Schulstufe, telli-Ebene oder Thema, um die Auswahl einzugrenzen.</div>
     <div class="filter-row">
       <span class="filter-label">Stufe</span>
       <span class="chip" data-level="P" role="button" tabindex="0">Primarstufe</span>
@@ -608,11 +618,13 @@ a:hover { color: var(--color-accent); }
       <span class="chip" data-type="dialogpartner" role="button" tabindex="0">Dialogpartner</span>
       <span class="chip" data-type="bildgenerierung" role="button" tabindex="0">Bildgenerierung</span>
     </div>
+    <div class="filter-row">
+      <span class="filter-label">Thema</span>
+      <span class="chip" data-theme="inklusion" role="button" tabindex="0">Inklusion / DaZ</span>
+    </div>
     <div class="filter-meta">
-      <span><span class="count" id="visibleCount">0</span> von 42 Beispielen</span>
-      <button class="reset-link" id="resetBtn">Alle anzeigen</button>
-      <span class="filter-divider">·</span>
-      <button class="reset-link" id="clearBtn">Alle abwählen</button>
+      <span><span class="count" id="visibleCount">42</span> von 42 Beispielen</span>
+      <button class="reset-link" id="resetBtn">Filter zurücksetzen</button>
     </div>
   </div>
 </div>
@@ -621,9 +633,6 @@ a:hover { color: var(--color-accent); }
 <main class="catalog">
   <div class="container" id="catalogContainer">
     <!-- Cards rendered by JS -->
-  </div>
-  <div class="container">
-    <p class="empty-state" id="emptyState">Wählen Sie eine oder mehrere Schulstufen und telli-Ebenen aus, um passende Beispiele zu sehen.</p>
   </div>
 </main>
 
@@ -698,7 +707,7 @@ a:hover { color: var(--color-accent); }
    DATA — 42 Einträge
    ═══════════════════════════════════════════ */
 const DATA=[
-{id:1,title:"Differenzierte Lesetexte generieren",category:"A",level:["P"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Sachtext in drei Niveaustufen für eine 2. Klasse generieren lassen.",content:'<div class="block-prompt">„Schreibe einen kurzen Sachtext über Igel im Winter für eine 2. Klasse. Maximal 60 Wörter, nur einfache Hauptsätze, Silbentrennung durch Bindestriche markieren. Erstelle denselben Text in einer Version für leseschwache Kinder (40 Wörter, Druckschrift-Stil) und einer Version für lesestarke Kinder (80 Wörter, mit einem Nebensatz pro Absatz)."</div>'},
+{id:1,inklusion:true,title:"Differenzierte Lesetexte generieren",category:"A",level:["P"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Sachtext in drei Niveaustufen für eine 2. Klasse generieren lassen.",content:'<div class="block-prompt">„Schreibe einen kurzen Sachtext über Igel im Winter für eine 2. Klasse. Maximal 60 Wörter, nur einfache Hauptsätze, Silbentrennung durch Bindestriche markieren. Erstelle denselben Text in einer Version für leseschwache Kinder (40 Wörter, Druckschrift-Stil) und einer Version für lesestarke Kinder (80 Wörter, mit einem Nebensatz pro Absatz)."</div><div class="block-diff"><span class="block-label">Variante Inklusion / DaZ</span>Für DaZ-Lernende ergänzen Sie im Prompt: „Sprachniveau A2, mit Wortglossar am Ende. Verwende nur Wörter aus dem Grundwortschatz." Für den Förderschwerpunkt Lernen: „Maximal 30 Wörter, ein Satz pro Zeile, Schlüsselwörter fett markieren."</div>'},
 {id:2,title:"Elfchen-Gerüste vorbereiten",category:"A",level:["P"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Lyrik-Gerüste mit Lücken zum Thema Herbst, Klasse 3.",content:'<div class="block-prompt">„Erstelle fünf Elfchen-Gerüste zum Thema Herbst für eine 3. Klasse. Gib jeweils die Struktur 1-2-3-4-1 vor, aber lass die letzte Zeile als Lücke. Ergänze pro Elfchen drei Wortvorschläge für die fehlende Zeile."</div>'},
 {id:3,title:"Grammatik-Übungen mit Fehleranalyse",category:"A",level:["SI"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Fehlerhafte Sätze zur Kommasetzung generieren, Klasse 7.",content:'<div class="block-prompt">„Du bist Deutschlehrerin. Erstelle fünf Sätze mit typischen Kommafehlern für eine 7. Klasse (Relativsätze, Aufzählungen, Infinitivgruppen). Kennzeichne die Fehler nicht. Erstelle separat einen Lösungsbogen mit Erklärung der jeweiligen Kommaregel."</div>'},
 {id:4,title:"Materialgestütztes Schreiben vorbereiten",category:"A",level:["SI"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Drei kontroverse Kurztexte zum Thema Handyverbot, Klasse 8.",content:'<div class="block-prompt">„Erstelle drei kurze, kontroverse Textausschnitte (je 40-60 Wörter) zum Thema ‚Sollten Handys in der Schule erlaubt sein?\' Die Texte sollen verschiedene Positionen vertreten: ein Elternteil, eine Schülerin, ein Medienpädagoge. Verwende Alltagssprache, Klasse 8."</div>'},
@@ -710,13 +719,13 @@ const DATA=[
 {id:10,title:"Differenzierungs-Assistent",category:"B",level:["SI"],telliType:"assistent",telliTypeLabel:"Assistent",shortDesc:"Wandelt einen Sachtext in drei Schwierigkeitsstufen um.",content:'<div class="block-lk"><span class="block-label">Instruktion</span>„Du bekommst einen Sachtext und wandelst ihn in drei Schwierigkeitsstufen um: Stufe 1 (einfache Sprache, kurze Sätze, Wortglossar), Stufe 2 (Originaltext gekürzt), Stufe 3 (Originaltext plus vertiefende Zusatzfragen). Du behältst die Kernaussagen bei und markierst, was sich zwischen den Stufen ändert."</div>'},
 {id:11,title:"Abitur-Aufgaben-Sparringspartner",category:"B",level:["SII"],telliType:"assistent",telliTypeLabel:"Assistent",shortDesc:"Hilft beim Formulieren von Klausuraufgaben im Abiturformat.",content:'<div class="block-lk"><span class="block-label">Hintergrundwissen</span>KMK-Bildungsstandards Deutsch Sek II, Operatorenkatalog, Aufgabenformate (Analyse, Erörterung, materialgestütztes Schreiben).</div><div class="block-lk"><span class="block-label">Instruktion</span>„Du hilfst Oberstufen-Lehrkräften, Klausuraufgaben und Übungsaufgaben im Abiturformat zu formulieren. Du achtest auf korrekte Operatoren, angemessenes Anforderungsniveau und lieferst zu jeder Aufgabe einen skizzierten Erwartungshorizont. Du warnst, wenn eine Aufgabe zu eng oder zu offen formuliert ist."</div>'},
 {id:12,title:"Epochen-Experte",category:"B",level:["SII"],telliType:"assistent",telliTypeLabel:"Assistent",shortDesc:"Beantwortet Fragen zu Literaturepochen, ordnet Texte ein.",content:'<div class="block-lk"><span class="block-label">Hintergrundwissen</span>Überblick Literaturepochen (Aufklärung bis Gegenwartsliteratur), wichtige Werke und Autoren, epochentypische Merkmale.</div><div class="block-lk"><span class="block-label">Instruktion</span>„Du bist Experte für deutsche Literaturgeschichte. Du beantwortest Fragen zu Epochen, ordnest Texte ein und erklärst Zusammenhänge. Du lieferst immer konkrete Textbeispiele. Du vermeidest Vereinfachungen und weist auf Grenzfälle hin (z.B. Goethe zwischen Sturm und Drang und Klassik)."</div>'},
-{id:13,title:"Geschichten-Weiterschreiber",category:"C",level:["P"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Kinder schreiben eine Geschichte weiter, telli stellt Fragen statt vorzuschreiben.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Hier ist der Anfang einer Geschichte: ‚Der kleine Fuchs stand am Waldrand und sah etwas Glitzerndes im Gebüsch...\' Schreibe die Geschichte weiter! Ich helfe dir mit Fragen, wenn du nicht weiterweißt."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Stelle dem Kind maximal eine Frage pro Antwort. Frage nach Sinneseindrücken (Was hört/riecht/sieht der Fuchs?), nach Gefühlen, nach dem nächsten Schritt. Schreibe nie die Geschichte für das Kind. Lobe konkret, was gut gelungen ist."</div>'},
+{id:13,inklusion:true,title:"Geschichten-Weiterschreiber",category:"C",level:["P"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Kinder schreiben eine Geschichte weiter, telli stellt Fragen statt vorzuschreiben.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Hier ist der Anfang einer Geschichte: ‚Der kleine Fuchs stand am Waldrand und sah etwas Glitzerndes im Gebüsch...\' Schreibe die Geschichte weiter! Ich helfe dir mit Fragen, wenn du nicht weiterweißt."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Stelle dem Kind maximal eine Frage pro Antwort. Frage nach Sinneseindrücken (Was hört/riecht/sieht der Fuchs?), nach Gefühlen, nach dem nächsten Schritt. Schreibe nie die Geschichte für das Kind. Lobe konkret, was gut gelungen ist."</div><div class="block-diff"><span class="block-label">Variante Inklusion / DaZ</span>Für den Förderschwerpunkt Sprache ergänzen Sie in der Instruktion: „Akzeptiere auch Einwort-Antworten und Stichwörter. Baue sie lobend in einen vollständigen Satz ein und wiederhole ihn."</div>'},
 {id:14,title:"Wörter-Detektiv",category:"C",level:["P"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Zusammengesetzte Wörter zerlegen und selbst erfinden.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Du bist ein Wörter-Detektiv! Ich gebe dir ein zusammengesetztes Wort, und du findest heraus, aus welchen Teilen es besteht. Dann erfindest du selbst neue zusammengesetzte Wörter."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Beginne mit einfachen Beispielen (Haustür, Schneeball). Steigere die Schwierigkeit. Lass das Kind eigene Wörter erfinden und akzeptiere kreative Lösungen. Erkläre Wortbildungsprinzipien in kindgerechter Sprache."</div>'},
-{id:15,title:"Bildgeschichten-Erzähler",category:"C",level:["P"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Von der Bildbeschreibung zur ganzen Geschichte, Schritt für Schritt.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Schau dir das Bild an (Lehrkraft gibt Bild ein). Beschreibe zuerst, was du siehst. Dann überlege: Was ist vorher passiert? Was passiert als Nächstes? Erzähle mir die ganze Geschichte!"</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Stelle Scaffolding-Fragen in der Reihenfolge: Benennen → Beschreiben → Vermuten → Erzählen. Fordere immer mindestens ein Adjektiv pro Satz ein. Wiederhole gelungene Formulierungen des Kindes lobend."</div>'},
-{id:16,title:"Argumentations-Trainer",category:"C",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"These-Begründung-Beispiel üben, mit Feedback zur Argumentstärke.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir üben das Argumentieren. Du bekommst eine These und musst sie mit einem Argument und einem Beispiel stützen. Ich sage dir, ob dein Argument stark oder schwach ist und warum."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Gib dem Schüler eine alltagsnahe These (z.B. ‚Schuluniformen sollten Pflicht sein\'). Bewerte Argumente nach dem Dreischritt These-Begründung-Beispiel. Wenn ein Argument schwach ist, sage nicht die Lösung, sondern frage: ‚Was könnte jemand dagegen einwenden?\' Steigere von einfachen zu kontroversen Thesen."</div>'},
+{id:15,inklusion:true,title:"Bildgeschichten-Erzähler",category:"C",level:["P"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Von der Bildbeschreibung zur ganzen Geschichte, Schritt für Schritt.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Schau dir das Bild an (Lehrkraft gibt Bild ein). Beschreibe zuerst, was du siehst. Dann überlege: Was ist vorher passiert? Was passiert als Nächstes? Erzähle mir die ganze Geschichte!"</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Stelle Scaffolding-Fragen in der Reihenfolge: Benennen → Beschreiben → Vermuten → Erzählen. Fordere immer mindestens ein Adjektiv pro Satz ein. Wiederhole gelungene Formulierungen des Kindes lobend."</div><div class="block-diff"><span class="block-label">Variante Inklusion / DaZ</span>Für DaZ-Lernende ergänzen Sie in der Instruktion: „Biete zu jedem Schritt Satzanfänge an: Auf dem Bild sehe ich..., Im Vordergrund ist..., Ich glaube, danach passiert..." Für den Förderschwerpunkt Lernen: „Beschränke dich auf Schritt 1 und 2 (Benennen und Beschreiben). Stelle geschlossene Fragen."</div>'},
+{id:16,inklusion:true,title:"Argumentations-Trainer",category:"C",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"These-Begründung-Beispiel üben, mit Feedback zur Argumentstärke.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir üben das Argumentieren. Du bekommst eine These und musst sie mit einem Argument und einem Beispiel stützen. Ich sage dir, ob dein Argument stark oder schwach ist und warum."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Gib dem Schüler eine alltagsnahe These (z.B. ‚Schuluniformen sollten Pflicht sein\'). Bewerte Argumente nach dem Dreischritt These-Begründung-Beispiel. Wenn ein Argument schwach ist, sage nicht die Lösung, sondern frage: ‚Was könnte jemand dagegen einwenden?\' Steigere von einfachen zu kontroversen Thesen."</div><div class="block-diff"><span class="block-label">Variante Inklusion / DaZ</span>Für DaZ-Lernende ergänzen Sie in der Instruktion: „Biete Formulierungsbausteine an: Ich finde, dass..., Ein Beispiel dafür ist..., Das ist wichtig, weil..." Verwende alltagsnahe Themen mit konkretem Lebensweltbezug.</div>'},
 {id:17,title:"Rechtschreib-Werkstatt",category:"C",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Diktat-Übung mit anschließender Regelklärung statt reiner Korrektur.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Ich diktiere dir Sätze. Schreibe sie auf. Danach prüfen wir zusammen, welche Stellen knifflig waren, und lernen die Regel dahinter."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Diktiere Sätze mit jeweils einem Rechtschreibschwerpunkt (Dehnung, Schärfung, Groß-/Kleinschreibung, das/dass). Wenn der Schüler einen Fehler macht, nenne nicht sofort die richtige Schreibung, sondern die zugehörige Regel und lass den Schüler selbst korrigieren."</div>'},
 {id:18,title:"Bewerbungs-Coach",category:"C",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Bewerbungsanschreiben Schritt für Schritt erarbeiten, Klasse 8/9.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Du schreibst eine Bewerbung für ein Praktikum. Ich helfe dir Schritt für Schritt: Erst die Anrede, dann der Einleitungssatz, dann deine Stärken, dann der Schluss."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Führe den Schüler durch die Textteile eines Bewerbungsanschreibens. Gib kein fertiges Anschreiben vor. Frage nach dem konkreten Praktikumsplatz, den Stärken des Schülers, der Motivation. Gib nach jedem Abschnitt konkretes sprachliches Feedback."</div>'},
-{id:19,title:"Gedichtanalyse-Begleiter",category:"C",level:["SII"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Schrittweise durch die Phasen der Gedichtanalyse, ohne Lösungen vorwegzunehmen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Du analysierst ein Gedicht. Ich begleite dich Schritt für Schritt: Erst Leseeindruck, dann formale Analyse, dann inhaltliche Deutung, dann sprachliche Mittel. Am Ende formulierst du eine Gesamtdeutung."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Begleite den Schüler durch die Phasen der Gedichtanalyse. Nenne nie die Deutung. Frage stattdessen: ‚Welches Bild siehst du in Vers 3?\' ‚Was bewirkt der Zeilenumbruch hier?\' Wenn der Schüler ein sprachliches Mittel nicht erkennt, gib einen Hinweis auf die Kategorie (z.B. ‚Schau dir die Bildlichkeit an\'), nicht auf das konkrete Mittel."</div>'},
+{id:19,inklusion:true,title:"Gedichtanalyse-Begleiter",category:"C",level:["SII"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Schrittweise durch die Phasen der Gedichtanalyse, ohne Lösungen vorwegzunehmen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Du analysierst ein Gedicht. Ich begleite dich Schritt für Schritt: Erst Leseeindruck, dann formale Analyse, dann inhaltliche Deutung, dann sprachliche Mittel. Am Ende formulierst du eine Gesamtdeutung."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Begleite den Schüler durch die Phasen der Gedichtanalyse. Nenne nie die Deutung. Frage stattdessen: ‚Welches Bild siehst du in Vers 3?\' ‚Was bewirkt der Zeilenumbruch hier?\' Wenn der Schüler ein sprachliches Mittel nicht erkennt, gib einen Hinweis auf die Kategorie (z.B. ‚Schau dir die Bildlichkeit an\'), nicht auf das konkrete Mittel."</div><div class="block-diff"><span class="block-label">Variante Inklusion / DaZ</span>Für den Förderschwerpunkt Lernen ergänzen Sie in der Instruktion: „Arbeite nur mit einer einzelnen Strophe. Stelle maximal eine Frage pro Antwort. Beginne mit konkreten Fragen vor abstrakten."</div>'},
 {id:20,title:"Erörterungs-Werkstatt",category:"C",level:["SII"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Textgebundene Erörterung sequenziell erarbeiten mit Feedback pro Schritt.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Du übst, eine textgebundene Erörterung zu schreiben. Gib mir den Sachtext (oder das Thema), und ich führe dich durch die Schritte: Textanalyse → Thesenextraktion → Argumentsammlung → Gliederung → Formulierung."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Arbeite streng sequenziell. Lass den Schüler in jedem Schritt selbst formulieren und gib erst Feedback, bevor der nächste Schritt beginnt. Achte auf korrekte Verwendung von Operatoren. Unterscheide explizit zwischen Zusammenfassung, Analyse und eigener Stellungnahme."</div>'},
 {id:21,title:"Epochen-Quiz",category:"C",level:["SII"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Zitate und Motive einer Epoche zuordnen und begründen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Ich nenne dir ein Zitat, ein Motiv oder ein Merkmal. Du ordnest es einer Epoche zu und begründest. Danach bekommst du eine Rückmeldung."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Verwende epochentypische Motive und Stilmerkmale. Akzeptiere begründete Zuordnungen auch bei Grenzfällen. Erkläre nach jeder Runde den epochengeschichtlichen Kontext."</div>'},
 {id:22,title:"Frieda Fabulix, die Geschichtensammlerin",category:"D",level:["P"],telliType:"dialogpartner",telliTypeLabel:"Dialogpartner",shortDesc:"Freundliche Figur, die Kinder zum Geschichtenerfinden anregt.",content:'<div class="block-sus"><span class="block-label">Vorstellung (sichtbar für SuS)</span>„Hallo! Ich bin Frieda Fabulix. Ich sammle Geschichten aus der ganzen Welt. Leider habe ich mein Notizbuch verloren und brauche deine Hilfe, neue Geschichten zu erfinden!"</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Du bist Frieda, eine freundliche, neugierige Figur. Du sprichst in einfacher Sprache (Klasse 2-4). Du stellst Fragen, die zum Erzählen anregen: Wer? Wo? Was passiert? Du reagierst begeistert auf Details. Du schreibst nie die Geschichte für das Kind."</div>'},
@@ -733,13 +742,13 @@ const DATA=[
 {id:33,title:"Szenenbilder für szenisches Spiel",category:"E",level:["SI"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Bühnenbild-Skizzen als Vorbereitung für szenisches Interpretieren.",content:'<div class="block-prompt">„Erstelle ein Bühnenbild-Konzept für eine Szene: Ein Gerichtssaal im Mittelalter, einfach gehalten, nur die wesentlichen Elemente (Richterpult, Anklagebank, Zuschauerreihen). Theaterstil, schwarz-weiß-Skizze."</div><p><strong>Einsatz:</strong> Vorbereitung auf szenisches Interpretieren bei dramatischen Texten.</p>'},
 {id:34,title:"Epochen visualisieren",category:"E",level:["SII"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Kontrastierende Bilder: Romantik vs. Naturalismus als Einstiegsimpuls.",content:'<div class="block-prompt">„Generiere zwei kontrastierende Bilder: Links ein typisches Landschaftsbild im Stil der Romantik (wilde Natur, Ruine, einsamer Wanderer, Mondlicht). Rechts dieselbe Landschaft im Stil des Naturalismus (industrielle Spuren, rauchende Schornsteine, Arbeiter). Kein bestimmter Künstler, allgemeiner Epochenstil."</div><p><strong>Einsatz:</strong> Einstiegsimpuls für Epochenvergleich, Gesprächsanlass über die Verbindung von Weltbild und ästhetischer Darstellung.</p>'},
 {id:35,title:"KI-Bilder als Medienkritik-Objekt",category:"E",level:["SII"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Stereotype in KI-generierten Bildern analysieren und diskutieren.",content:'<p><strong>Unterrichtsidee:</strong> SuS generieren Bilder zu einem aktuellen Thema und analysieren: Welche Stereotype reproduziert die KI? Welche Perspektiven fehlen? Was passiert, wenn ich den Prompt ändere?</p><p><strong>Beispiel-Prompt-Sequenz:</strong></p><ol><li>„Ein typischer deutscher Dichter" → Was zeigt die KI?</li><li>„Eine typische deutsche Dichterin" → Vergleich.</li><li>„Ein Dichter, der nicht dem Stereotyp entspricht" → Diskussion über Bias.</li></ol>'},
-{id:36,title:"Textvereinfacher",category:"G",level:["P","SI","SII"],telliType:"assistent",telliTypeLabel:"Assistent",shortDesc:"Vereinfacht Texte auf verschiedene Sprachniveaus, mit Glossar.",content:'<div class="block-lk"><span class="block-label">Hintergrundwissen</span>Regeln für Einfache Sprache und Leichte Sprache, GER-Niveaustufen A1-C1, Wortschatzlisten nach Sprachniveau.</div><div class="block-lk"><span class="block-label">Instruktion</span>„Du vereinfachst Texte für den Unterricht. Du fragst immer zuerst: Welches Zielniveau (Einfache Sprache, Leichte Sprache, Sprachniveau A1/A2/B1)? Welche Fachbegriffe müssen erhalten bleiben? Du lieferst den vereinfachten Text plus ein Glossar der Fachbegriffe mit kurzer Erklärung. Du markierst Stellen, an denen du den Inhalt gekürzt hast, damit die Lehrkraft entscheiden kann, ob die Kürzung akzeptabel ist."</div>'},
-{id:37,title:"Satz-Baukasten",category:"G",level:["P","SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Sätze sortieren und Schritt für Schritt erweitern, Förderschwerpunkt Sprache/Lernen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir bauen Sätze! Ich gebe dir Wörter, und du setzt sie in die richtige Reihenfolge. Dann erweitern wir den Satz Schritt für Schritt."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Beginne mit einfachen Subjekt-Verb-Sätzen (‚Der Hund rennt.\'). Lass den Schüler sortieren. Dann erweitere: Wohin rennt der Hund? Warum? Wie? Steigere von Hauptsätzen zu einfachen Nebensätzen (weil, dass, wenn). Bei Fehlern in der Wortstellung: Zeige den korrekten Satz und lass den Schüler die Veränderung benennen. Kein Grammatikjargon, sondern: ‚Das Verb steht immer an zweiter Stelle. Schau mal.\'"</div>'},
-{id:38,title:"Lese-Helferin",category:"G",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Gemeinsames Lesen mit gestuften Verständnisfragen, Förderschwerpunkt Lernen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir lesen zusammen einen Text. Nach jedem Abschnitt stelle ich dir eine Frage. Wenn du nicht weiterweißt, helfe ich dir mit einem Tipp."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Arbeite mit kurzen Textabschnitten (3-5 Sätze). Stelle nach jedem Abschnitt eine Verständnisfrage auf Reproduktionsniveau (‚Wer macht was?\'). Erst bei Erfolg: Transferfrage (‚Warum wohl?\'). Gestufte Hilfen: 1. Frage umformulieren, 2. relevante Textstelle nennen, 3. Antwortalternativen anbieten. Verwende Alltagssprache. Erkläre unbekannte Wörter sofort, ohne dass der Schüler fragen muss."</div>'},
-{id:39,title:"Milo, der neugierige Neue",category:"G",level:["P","SI"],telliType:"dialogpartner",telliTypeLabel:"Dialogpartner",shortDesc:"Gleichaltriger DaZ-Lernender, dem Kinder Dinge erklären (Lernen durch Erklären).",content:'<div class="block-sus"><span class="block-label">Vorstellung (sichtbar für SuS)</span>„Hallo! Ich bin Milo und bin gerade erst nach Deutschland gekommen. Ich kenne mich hier noch nicht gut aus. Kannst du mir helfen und mir Sachen erklären?"</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Du bist Milo, ein freundlicher, neugieriger Gleichaltriger, der Deutsch lernt. Du stellst Fragen über den Schulalltag, Hobbys, das Wetter, Essen. Du machst selbst kleine Sprachfehler (realistisch für A2), die der Schüler korrigieren darf. Du lässt den Schüler Experte sein (Lernen durch Erklären). Wenn der Schüler selbst DaZ-Lernender ist: Passe dein Niveau an und feiere jede gelungene Erklärung."</div>'},
-{id:40,title:"Bildgestützte Wortschatzarbeit",category:"G",level:["P","SI"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Szenenbilder mit benennbaren Gegenständen für Wortschatzübungen auf verschiedenen Niveaus.",content:'<div class="block-prompt">„Generiere ein Bild von einer typischen deutschen Küche mit 10 deutlich erkennbaren Gegenständen (Kühlschrank, Herd, Tisch, Stuhl, Tasse, Teller, Topf, Messer, Brot, Apfel). Klarer, einfacher Illustrationsstil, jeder Gegenstand gut sichtbar und benennbar."</div><p><strong>Einsatz:</strong> SuS benennen Gegenstände, ordnen Wörter zu, bilden Sätze (‚Der Topf steht auf dem Herd.\'). Erweiterbar: Dasselbe Bild für verschiedene Sprachniveaus (A1: benennen, A2: beschreiben, B1: eine Alltagssituation erzählen).</p>'},
-{id:41,title:"Gefühle-Bilder für emotional-soziale Förderung",category:"G",level:["P"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Gesichter mit verschiedenen Gefühlen als Gesprächs- und Wortschatzanlass.",content:'<div class="block-prompt">„Generiere vier Bilder von Kindergesichtern, die verschiedene Gefühle zeigen: Freude, Trauer, Wut, Angst. Warmer, freundlicher Illustrationsstil, keine realistischen Fotos. Die Gesichter sollen Diversität zeigen."</div><p><strong>Einsatz:</strong> Gesprächsanlass über Gefühle, Wortschatzarbeit (Adjektive für Gefühle), Vorbereitung auf Streitschlichtung oder Sozialtraining. Erweiterung: SuS beschreiben Situationen, in denen sie sich so gefühlt haben.</p>'},
-{id:42,title:"Sprachniveau-Adapter",category:"G",level:["P","SI","SII"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Ein Arbeitsblatt in drei Versionen (A1-A2, B1, Regelklasse), optisch einheitlich.",content:'<div class="block-prompt">„Hier ist ein Arbeitsblatt für Klasse 5 zum Thema Satzglieder. Erstelle drei Versionen: Version A (Sprachniveau A1-A2, für Seiteneinsteiger): nur Subjekt und Prädikat, mit Bildunterstützung und Auswahlaufgaben. Version B (Sprachniveau B1, für fortgeschrittene DaZ-Lernende): Subjekt, Prädikat, Objekt, Umstellprobe mit Lückentext. Version C (Regelklasse): vollständige Satzgliedbestimmung mit Fachbegriffen und Eigenproduktion. Alle drei Versionen sollen optisch ähnlich aussehen, damit kein Schüler stigmatisiert wird."</div>'}
+{id:36,inklusion:true,title:"Textvereinfacher",category:"G",level:["P","SI","SII"],telliType:"assistent",telliTypeLabel:"Assistent",shortDesc:"Vereinfacht Texte auf verschiedene Sprachniveaus, mit Glossar.",content:'<div class="block-lk"><span class="block-label">Hintergrundwissen</span>Regeln für Einfache Sprache und Leichte Sprache, GER-Niveaustufen A1-C1, Wortschatzlisten nach Sprachniveau.</div><div class="block-lk"><span class="block-label">Instruktion</span>„Du vereinfachst Texte für den Unterricht. Du fragst immer zuerst: Welches Zielniveau (Einfache Sprache, Leichte Sprache, Sprachniveau A1/A2/B1)? Welche Fachbegriffe müssen erhalten bleiben? Du lieferst den vereinfachten Text plus ein Glossar der Fachbegriffe mit kurzer Erklärung. Du markierst Stellen, an denen du den Inhalt gekürzt hast, damit die Lehrkraft entscheiden kann, ob die Kürzung akzeptabel ist."</div>'},
+{id:37,inklusion:true,title:"Satz-Baukasten",category:"G",level:["P","SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Sätze sortieren und Schritt für Schritt erweitern, Förderschwerpunkt Sprache/Lernen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir bauen Sätze! Ich gebe dir Wörter, und du setzt sie in die richtige Reihenfolge. Dann erweitern wir den Satz Schritt für Schritt."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Beginne mit einfachen Subjekt-Verb-Sätzen (‚Der Hund rennt.\'). Lass den Schüler sortieren. Dann erweitere: Wohin rennt der Hund? Warum? Wie? Steigere von Hauptsätzen zu einfachen Nebensätzen (weil, dass, wenn). Bei Fehlern in der Wortstellung: Zeige den korrekten Satz und lass den Schüler die Veränderung benennen. Kein Grammatikjargon, sondern: ‚Das Verb steht immer an zweiter Stelle. Schau mal.\'"</div>'},
+{id:38,inklusion:true,title:"Lese-Helferin",category:"G",level:["SI"],telliType:"lernszenario",telliTypeLabel:"Lernszenario",shortDesc:"Gemeinsames Lesen mit gestuften Verständnisfragen, Förderschwerpunkt Lernen.",content:'<div class="block-sus"><span class="block-label">Aufgabe (sichtbar für SuS)</span>„Wir lesen zusammen einen Text. Nach jedem Abschnitt stelle ich dir eine Frage. Wenn du nicht weiterweißt, helfe ich dir mit einem Tipp."</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Arbeite mit kurzen Textabschnitten (3-5 Sätze). Stelle nach jedem Abschnitt eine Verständnisfrage auf Reproduktionsniveau (‚Wer macht was?\'). Erst bei Erfolg: Transferfrage (‚Warum wohl?\'). Gestufte Hilfen: 1. Frage umformulieren, 2. relevante Textstelle nennen, 3. Antwortalternativen anbieten. Verwende Alltagssprache. Erkläre unbekannte Wörter sofort, ohne dass der Schüler fragen muss."</div>'},
+{id:39,inklusion:true,title:"Milo, der neugierige Neue",category:"G",level:["P","SI"],telliType:"dialogpartner",telliTypeLabel:"Dialogpartner",shortDesc:"Gleichaltriger DaZ-Lernender, dem Kinder Dinge erklären (Lernen durch Erklären).",content:'<div class="block-sus"><span class="block-label">Vorstellung (sichtbar für SuS)</span>„Hallo! Ich bin Milo und bin gerade erst nach Deutschland gekommen. Ich kenne mich hier noch nicht gut aus. Kannst du mir helfen und mir Sachen erklären?"</div><div class="block-lk"><span class="block-label">Instruktion (Hintergrund)</span>„Du bist Milo, ein freundlicher, neugieriger Gleichaltriger, der Deutsch lernt. Du stellst Fragen über den Schulalltag, Hobbys, das Wetter, Essen. Du machst selbst kleine Sprachfehler (realistisch für A2), die der Schüler korrigieren darf. Du lässt den Schüler Experte sein (Lernen durch Erklären). Wenn der Schüler selbst DaZ-Lernender ist: Passe dein Niveau an und feiere jede gelungene Erklärung."</div>'},
+{id:40,inklusion:true,title:"Bildgestützte Wortschatzarbeit",category:"G",level:["P","SI"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Szenenbilder mit benennbaren Gegenständen für Wortschatzübungen auf verschiedenen Niveaus.",content:'<div class="block-prompt">„Generiere ein Bild von einer typischen deutschen Küche mit 10 deutlich erkennbaren Gegenständen (Kühlschrank, Herd, Tisch, Stuhl, Tasse, Teller, Topf, Messer, Brot, Apfel). Klarer, einfacher Illustrationsstil, jeder Gegenstand gut sichtbar und benennbar."</div><p><strong>Einsatz:</strong> SuS benennen Gegenstände, ordnen Wörter zu, bilden Sätze (‚Der Topf steht auf dem Herd.\'). Erweiterbar: Dasselbe Bild für verschiedene Sprachniveaus (A1: benennen, A2: beschreiben, B1: eine Alltagssituation erzählen).</p>'},
+{id:41,inklusion:true,title:"Gefühle-Bilder für emotional-soziale Förderung",category:"G",level:["P"],telliType:"bildgenerierung",telliTypeLabel:"Bildgenerierung",shortDesc:"Gesichter mit verschiedenen Gefühlen als Gesprächs- und Wortschatzanlass.",content:'<div class="block-prompt">„Generiere vier Bilder von Kindergesichtern, die verschiedene Gefühle zeigen: Freude, Trauer, Wut, Angst. Warmer, freundlicher Illustrationsstil, keine realistischen Fotos. Die Gesichter sollen Diversität zeigen."</div><p><strong>Einsatz:</strong> Gesprächsanlass über Gefühle, Wortschatzarbeit (Adjektive für Gefühle), Vorbereitung auf Streitschlichtung oder Sozialtraining. Erweiterung: SuS beschreiben Situationen, in denen sie sich so gefühlt haben.</p>'},
+{id:42,inklusion:true,title:"Sprachniveau-Adapter",category:"G",level:["P","SI","SII"],telliType:"prompt",telliTypeLabel:"Prompt",shortDesc:"Ein Arbeitsblatt in drei Versionen (A1-A2, B1, Regelklasse), optisch einheitlich.",content:'<div class="block-prompt">„Hier ist ein Arbeitsblatt für Klasse 5 zum Thema Satzglieder. Erstelle drei Versionen: Version A (Sprachniveau A1-A2, für Seiteneinsteiger): nur Subjekt und Prädikat, mit Bildunterstützung und Auswahlaufgaben. Version B (Sprachniveau B1, für fortgeschrittene DaZ-Lernende): Subjekt, Prädikat, Objekt, Umstellprobe mit Lückentext. Version C (Regelklasse): vollständige Satzgliedbestimmung mit Fachbegriffen und Eigenproduktion. Alle drei Versionen sollen optisch ähnlich aussehen, damit kein Schüler stigmatisiert wird."</div>'}
 ];
 
 /* ═══════════════════════════════════════════
@@ -763,11 +772,13 @@ function renderCards() {
     card.className = "card";
     card.dataset.levels = d.level.join(",");
     card.dataset.type = d.telliType;
+    card.dataset.inklusion = d.inklusion ? "true" : "false";
 
     const levelBadges = d.level.map(l =>
       `<span class="badge badge-${l}">${LEVEL_LABELS[l]}</span>`
     ).join("");
     const typeBadge = `<span class="badge badge-${d.telliType}">${d.telliTypeLabel}</span>`;
+    const inklusionBadge = d.inklusion ? '<span class="badge badge-inklusion">Inklusion / DaZ</span>' : '';
 
     card.innerHTML = `
       <div class="card-header" role="button" tabindex="0" aria-expanded="false">
@@ -776,7 +787,7 @@ function renderCards() {
             <span class="card-number">#${d.id}</span>
             <span class="card-title">${d.title}</span>
           </div>
-          <div class="card-badges">${levelBadges}${typeBadge}</div>
+          <div class="card-badges">${levelBadges}${typeBadge}${inklusionBadge}</div>
           <div class="card-short">${d.shortDesc}</div>
         </div>
         <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -804,6 +815,7 @@ renderCards();
    ═══════════════════════════════════════════ */
 const levelChips = document.querySelectorAll(".chip[data-level]");
 const typeChips = document.querySelectorAll(".chip[data-type]");
+const themeChips = document.querySelectorAll(".chip[data-theme]");
 const countEl = document.getElementById("visibleCount");
 const resetBtn = document.getElementById("resetBtn");
 
@@ -814,26 +826,28 @@ function getActiveValues(chips, attr) {
 function applyFilters() {
   const activeLevels = getActiveValues(levelChips, "level");
   const activeTypes = getActiveValues(typeChips, "type");
-  const emptyState = document.getElementById("emptyState");
-  const noFilters = activeLevels.length === 0 && activeTypes.length === 0;
+  const activeThemes = getActiveValues(themeChips, "theme");
+  const noFilters = activeLevels.length === 0 && activeTypes.length === 0 && activeThemes.length === 0;
   let visible = 0;
 
   document.querySelectorAll(".card").forEach(card => {
     if (noFilters) {
-      card.classList.add("hidden");
+      card.classList.remove("hidden");
+      visible++;
       return;
     }
     const cardLevels = card.dataset.levels.split(",");
     const cardType = card.dataset.type;
+    const cardInklusion = card.dataset.inklusion === "true";
     const matchLevel = activeLevels.length === 0 || cardLevels.some(l => activeLevels.includes(l));
     const matchType = activeTypes.length === 0 || activeTypes.includes(cardType);
-    const show = matchLevel && matchType;
+    const matchTheme = activeThemes.length === 0 || (activeThemes.includes("inklusion") && cardInklusion);
+    const show = matchLevel && matchType && matchTheme;
     card.classList.toggle("hidden", !show);
     if (show) visible++;
   });
 
   countEl.textContent = visible;
-  emptyState.classList.toggle("hidden", visible > 0);
 }
 
 function chipToggle(e) {
@@ -843,24 +857,23 @@ function chipToggle(e) {
 
 levelChips.forEach(c => c.addEventListener("click", chipToggle));
 typeChips.forEach(c => c.addEventListener("click", chipToggle));
+themeChips.forEach(c => c.addEventListener("click", chipToggle));
 levelChips.forEach(c => c.addEventListener("keydown", e => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chipToggle(e); }
 }));
 typeChips.forEach(c => c.addEventListener("keydown", e => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chipToggle(e); }
 }));
+themeChips.forEach(c => c.addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chipToggle(e); }
+}));
 
 resetBtn.addEventListener("click", () => {
-  [...levelChips, ...typeChips].forEach(c => c.classList.add("active"));
+  [...levelChips, ...typeChips, ...themeChips].forEach(c => c.classList.remove("active"));
   applyFilters();
 });
 
-document.getElementById("clearBtn").addEventListener("click", () => {
-  [...levelChips, ...typeChips].forEach(c => c.classList.remove("active"));
-  applyFilters();
-});
-
-// Initial state: no filters active, all cards hidden, empty state visible
+// Initial state: no filters, all visible
 applyFilters();
 
 /* ═══════════════════════════════════════════
