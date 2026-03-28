@@ -14,24 +14,38 @@ Die Beispiele decken fünf telli-Konfigurationsebenen ab:
 - **Dialogpartner** – virtuelle Figuren mit eigenem Charakter
 - **Bildgenerierung** – KI-erzeugte Bilder als Unterrichtsmaterial
 
-Zusätzlich gibt es eine Querschnittskategorie **Inklusion / Differenzierung / DaZ**.
+12 der 42 Beispiele tragen zusätzlich das Querschnittsetikett **Inklusion / Differenzierung / DaZ** und enthalten konkrete Differenzierungshinweise für verschiedene Förderschwerpunkte und Sprachniveaus.
 
 ## Live ansehen
 
 👉 [https://mgkurz.github.io/-telli-deutsch-ideen/](https://mgkurz.github.io/-telli-deutsch-ideen/)
 
+## Funktionen
+
+- Filter nach Schulstufe (Primarstufe, Sek I, Sek II)
+- Filter nach telli-Ebene (Prompt, Assistent, Lernszenario, Dialogpartner, Bildgenerierung)
+- Filter nach Thema (Inklusion / DaZ)
+- Alle Filter kombinierbar, beim Start alles sichtbar
+- Accordion-Karten, mehrere gleichzeitig öffenbar
+- Erklärung der telli-Ebenen im Kopfbereich
+- Quellenverzeichnis mit Links zu KIMADU NRW, Goethe-Institut, KI-Campus u.a.
+
 ## Technik
 
 - Eine einzige `index.html` – kein Framework, kein Build-Step
 - Alle 42 Einträge als JS-Datenarray in der Datei
-- Filter nach Schulstufe und telli-Ebene
-- Responsive (iPad + Laptop)
-- Datenschutzerklärung integriert (Hash-Routing)
-- Keine externen Abhängigkeiten – läuft komplett ohne Verbindung zu Drittanbietern
+- Responsive (iPad + Laptop), touch-optimiert
+- Datenschutzerklärung integriert (Hash-Routing, keine zweite Datei)
+- Keine externen Abhängigkeiten – keine Cookies, kein Tracking, keine CDN-Schriften
+- DSGVO-konform
 
 ## Deployment
 
 Datei `index.html` ins Repo legen, GitHub Pages auf den `main`-Branch zeigen lassen. Fertig.
+
+## Weiterverwendung
+
+Die Datenstruktur ist erweiterbar. Weitere Fächer oder Beispiele können direkt im `DATA`-Array in der `index.html` ergänzt werden. Jeder Eintrag hat die Felder: `id`, `title`, `category`, `level`, `telliType`, `telliTypeLabel`, `shortDesc`, `content` und optional `inklusion`.
 
 ## Lizenz
 
