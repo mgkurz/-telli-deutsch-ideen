@@ -6,13 +6,18 @@ Interaktive Sammlung mit 42 Praxisbeispielen für den Einsatz von KI (AIS.chat) 
 
 Eine einzelne HTML-Seite mit filterbaren Good-Practice-Beispielen für den KI-Chatbot **AIS.chat** im Fach Deutsch. Gedacht als Inspirationsquelle für Lehrkräfte und Deutsch-Ausbilder in Hessen.
 
-Die Beispiele decken fünf AIS.chat-Konfigurationsebenen ab:
+Die Beispiele decken die fünf AIS.chat-Funktionen ab, gegliedert in zwei Gruppen.
 
-- **Prompts** – direkte Eingaben zur Unterrichtsvorbereitung
-- **Assistenten** – konfigurierte KI-Helfer mit Fachwissen
-- **Lernszenarien** – aufgabenbasierte Settings für Schülerinnen und Schüler
-- **Dialogpartner** – virtuelle Figuren mit eigenem Charakter
+**Eingaben** (spontane Eingabe, ohne gespeicherte Konfiguration):
+
+- **Prompts** – direkte Texteingaben zur Unterrichtsvorbereitung
 - **Bildgenerierung** – KI-erzeugte Bilder als Unterrichtsmaterial
+
+**Vorlagen** (einmal angelegt, wiederverwendbar):
+
+- **Assistenten** – konfigurierte KI-Helfer mit Fachwissen (nur Lehrkräfte)
+- **Dialogpartner** – virtuelle Figuren mit eigenem Charakter
+- **Lernszenarien** – aufgabenbasierte Settings für Schülerinnen und Schüler
 
 12 der 42 Beispiele tragen zusätzlich das Querschnittsetikett **Inklusion / Differenzierung / DaZ** und enthalten konkrete Differenzierungshinweise für verschiedene Förderschwerpunkte und Sprachniveaus.
 
@@ -23,11 +28,12 @@ Die Beispiele decken fünf AIS.chat-Konfigurationsebenen ab:
 ## Funktionen
 
 - Filter nach Schulstufe (Primarstufe, Sek I, Sek II)
-- Filter nach AIS.chat-Ebene (Prompt, Assistent, Lernszenario, Dialogpartner, Bildgenerierung)
+- Filter nach AIS.chat-Funktion: Eingaben (Prompt, Bildgenerierung) und Vorlagen (Assistent, Dialogpartner, Lernszenario)
 - Filter nach Thema (Inklusion / DaZ)
 - Alle Filter kombinierbar, beim Start alles sichtbar
 - Accordion-Karten, mehrere gleichzeitig öffenbar
-- Erklärung der AIS.chat-Ebenen im Kopfbereich
+- Kopier-Schaltfläche je Beispiel: überträgt Titel, Art, Stufe, Kurzbeschreibung und Inhalt als Klartext, etwa zur Weiterverarbeitung mit den Prompts aus [ais-chat-config](https://github.com/mgkurz/ais-chat-config)
+- Erklärung der AIS.chat-Funktionen im Kopfbereich
 - Quellenverzeichnis mit Links zu KIMADU NRW, Goethe-Institut, KI-Campus u.a.
 
 ## Technik

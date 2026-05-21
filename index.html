@@ -418,6 +418,40 @@ a:hover { color: var(--color-accent); }
 .card-body p { margin-bottom: 0.6rem; }
 .card-body em { font-style: italic; }
 .card-body strong { font-weight: 600; }
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+.copy-btn svg { width: 0.95rem; height: 0.95rem; flex-shrink: 0; }
+.copy-btn:hover {
+  color: var(--color-accent-dark);
+  border-color: var(--color-accent);
+  background: var(--color-bg-subtle);
+}
+.copy-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.copy-btn.copied {
+  color: #fff;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
 .card-body ol { margin: 0.5rem 0 0.5rem 1.2rem; }
 .card-body li { margin-bottom: 0.3rem; }
 
@@ -588,7 +622,7 @@ a:hover { color: var(--color-accent); }
 <!-- ════════ EBENEN ════════ -->
 <section class="section-ebenen">
   <div class="container">
-    <h2>Die AIS.chat-Ebenen im &Uuml;berblick</h2>
+    <h2>Die AIS.chat-Funktionen im &Uuml;berblick</h2>
     <div class="ebenen-grid">
       <div class="ebene-card fade-in">
         <span class="emoji">&#128172;</span>
@@ -596,29 +630,29 @@ a:hover { color: var(--color-accent); }
         <p>Direkte Eingaben an AIS.chat zur Unterrichtsvorbereitung. Die Lehrkraft tippt, AIS.chat liefert Material, Aufgaben oder Ideen.</p>
       </div>
       <div class="ebene-card fade-in" style="animation-delay:0.06s">
-        <span class="emoji">&#129302;</span>
-        <h3>Assistenten</h3>
-        <p>Von Lehrkr&auml;ften konfigurierte KI-Helfer mit hinterlegtem Fachwissen (Lehrpl&auml;ne, eigenes Material). Wie ein Fach-Kollege auf Abruf. Nur Lehrkr&auml;fte k&ouml;nnen Assistenten in AIS.chat erstellen.</p>
-      </div>
-      <div class="ebene-card fade-in" style="animation-delay:0.12s">
-        <span class="emoji">&#128203;</span>
-        <h3>Lernszenarien</h3>
-        <p>Aufgabenbasierte Settings f&uuml;r Sch&uuml;lerinnen und Sch&uuml;ler. Die SuS sehen eine konkrete Aufgabe, die Lehrkraft hat im Hintergrund Regeln und Hilfen definiert. Die KI begleitet, gibt aber keine L&ouml;sungen vor.</p>
-      </div>
-      <div class="ebene-card fade-in" style="animation-delay:0.18s">
-        <span class="emoji">&#127917;</span>
-        <h3>Dialogpartner</h3>
-        <p>Virtuelle Personen mit eigenem Charakter. SuS chatten mit einer fiktiven Figur (z.B. eine literarische Figur, ein Streitschlichter). Die Figur hat eine Vorstellung und verh&auml;lt sich konsistent.</p>
-      </div>
-      <div class="ebene-card fade-in" style="animation-delay:0.24s">
         <span class="emoji">&#128444;&#65039;</span>
         <h3>Bildgenerierung</h3>
         <p>AIS.chat erzeugt Bilder als Schreibanlass, Visualisierung oder Gegenstand f&uuml;r Medienkritik.</p>
       </div>
-      <div class="ebene-card fade-in" style="animation-delay:0.3s">
+      <div class="ebene-card fade-in" style="animation-delay:0.12s">
         <span class="emoji">&#9855;</span>
         <h3>Inklusion / Differenzierung / DaZ</h3>
         <p>Querschnittskategorie. KI erm&ouml;glicht gleiche Inhalte auf verschiedenen sprachlichen und didaktischen Niveaus. 12 Beispiele in dieser Sammlung tragen das Etikett &bdquo;Inklusion / DaZ&ldquo; und enthalten konkrete Differenzierungshinweise.</p>
+      </div>
+      <div class="ebene-card fade-in" style="animation-delay:0.18s">
+        <span class="emoji">&#129302;</span>
+        <h3>Assistenten</h3>
+        <p>Von Lehrkr&auml;ften konfigurierte KI-Helfer mit hinterlegtem Fachwissen (Lehrpl&auml;ne, eigenes Material). Wie ein Fach-Kollege auf Abruf. Nur Lehrkr&auml;fte k&ouml;nnen Assistenten in AIS.chat erstellen.</p>
+      </div>
+      <div class="ebene-card fade-in" style="animation-delay:0.24s">
+        <span class="emoji">&#127917;</span>
+        <h3>Dialogpartner</h3>
+        <p>Virtuelle Personen mit eigenem Charakter. SuS chatten mit einer fiktiven Figur (z.B. eine literarische Figur, ein Streitschlichter). Die Figur hat eine Vorstellung und verh&auml;lt sich konsistent.</p>
+      </div>
+      <div class="ebene-card fade-in" style="animation-delay:0.3s">
+        <span class="emoji">&#128203;</span>
+        <h3>Lernszenarien</h3>
+        <p>Aufgabenbasierte Settings f&uuml;r Sch&uuml;lerinnen und Sch&uuml;ler. Die SuS sehen eine konkrete Aufgabe, die Lehrkraft hat im Hintergrund Regeln und Hilfen definiert. Die KI begleitet, gibt aber keine L&ouml;sungen vor.</p>
       </div>
     </div>
   </div>
@@ -627,7 +661,7 @@ a:hover { color: var(--color-accent); }
 <!-- ════════ FILTER BAR ════════ -->
 <div class="filter-bar">
   <div class="container">
-    <div class="filter-hint">Filtern Sie nach Schulstufe, AIS.chat-Ebene oder Thema, um die Auswahl einzugrenzen.</div>
+    <div class="filter-hint">Filtern Sie nach Schulstufe, AIS.chat-Funktion oder Thema, um die Auswahl einzugrenzen.</div>
     <div class="filter-row">
       <span class="filter-label">Stufe</span>
       <span class="chip" data-level="P" role="button" tabindex="0">Primarstufe</span>
@@ -635,12 +669,15 @@ a:hover { color: var(--color-accent); }
       <span class="chip" data-level="SII" role="button" tabindex="0">Sek II</span>
     </div>
     <div class="filter-row">
-      <span class="filter-label">Ebene</span>
+      <span class="filter-label">Eingaben</span>
       <span class="chip" data-type="prompt" role="button" tabindex="0">Prompt</span>
-      <span class="chip" data-type="assistent" role="button" tabindex="0">Assistent</span>
-      <span class="chip" data-type="lernszenario" role="button" tabindex="0">Lernszenario</span>
-      <span class="chip" data-type="dialogpartner" role="button" tabindex="0">Dialogpartner</span>
       <span class="chip" data-type="bildgenerierung" role="button" tabindex="0">Bildgenerierung</span>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Vorlagen</span>
+      <span class="chip" data-type="assistent" role="button" tabindex="0">Assistent</span>
+      <span class="chip" data-type="dialogpartner" role="button" tabindex="0">Dialogpartner</span>
+      <span class="chip" data-type="lernszenario" role="button" tabindex="0">Lernszenario</span>
     </div>
     <div class="filter-row">
       <span class="filter-label">Thema</span>
@@ -817,6 +854,53 @@ const TYPE_LABELS = {
    ═══════════════════════════════════════════ */
 const container = document.getElementById("catalogContainer");
 
+const COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+/* Baut den kopierbaren Text eines Beispiels: Feldnamen, durch Leerzeilen getrennt,
+   danach die Inhaltsbloecke mit ihren eigenen Beschriftungen. */
+function buildCopyText(d) {
+  const stufe = d.level.map(l => LEVEL_LABELS[l]).join(", ");
+  const parts = [
+    "Titel: " + d.title,
+    "Art: " + d.aisTypeLabel,
+    "Stufe: " + stufe,
+    "Kurzbeschreibung: " + d.shortDesc
+  ];
+  const tmp = document.createElement("div");
+  tmp.innerHTML = d.content;
+  tmp.querySelectorAll(".block-prompt, .block-lk, .block-sus, .block-diff").forEach(block => {
+    const clone = block.cloneNode(true);
+    const labelEl = clone.querySelector(".block-label");
+    const label = labelEl ? labelEl.textContent.trim() : "";
+    if (labelEl) labelEl.remove();
+    const body = clone.textContent.replace(/\s+/g, " ").trim();
+    parts.push(label ? label + "\n" + body : body);
+  });
+  return parts.join("\n\n");
+}
+
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (e) { /* faellt unten auf execCommand zurueck */ }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) { return false; }
+}
+
 function renderCards() {
   container.innerHTML = "";
   DATA.forEach((d, i) => {
@@ -844,7 +928,12 @@ function renderCards() {
         </div>
         <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </div>
-      <div class="card-body">${d.content}</div>
+      <div class="card-body">
+        ${d.content}
+        <div class="card-actions">
+          <button class="copy-btn" type="button" aria-label="Beispiel kopieren">${COPY_ICON}<span>Kopieren</span></button>
+        </div>
+      </div>
     `;
 
     const header = card.querySelector(".card-header");
@@ -855,6 +944,21 @@ function renderCards() {
     header.addEventListener("click", toggle);
     header.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+
+    const copyBtn = card.querySelector(".copy-btn");
+    let copyTimer = null;
+    copyBtn.addEventListener("click", async e => {
+      e.stopPropagation();
+      const ok = await copyToClipboard(buildCopyText(d));
+      if (!ok) return;
+      copyBtn.innerHTML = CHECK_ICON + "<span>Kopiert</span>";
+      copyBtn.classList.add("copied");
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => {
+        copyBtn.innerHTML = COPY_ICON + "<span>Kopieren</span>";
+        copyBtn.classList.remove("copied");
+      }, 2000);
     });
 
     container.appendChild(card);
